@@ -1,0 +1,130 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  EDITOR
+  VIEWER
+}
+
+enum QuoteStatus {
+  NEW
+  IN_PROGRESS
+  QUOTED
+  ACCEPTED
+  REJECTED
+  CLOSED
+}
+
+enum MessageStatus {
+  NEW
+  READ
+  REPLIED
+  ARCHIVED
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  role         UserRole @default(EDITOR)
+  active       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Project {
+  id           String   @id @default(cuid())
+  slug         String   @unique
+  clientName   String
+  titleFr      String
+  titleEn      String
+  descriptionFr String  @db.Text
+  descriptionEn String  @db.Text
+  technologies String[]
+  resultsFr    String   @db.Text
+  resultsEn    String   @db.Text
+  coverImage   String
+  screenshots  String[]
+  featured     Boolean  @default(false)
+  published    Boolean  @default(true)
+  order        Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model BlogPost {
+  id            String   @id @default(cuid())
+  slug          String   @unique
+  titleFr       String
+  titleEn       String
+  excerptFr     String   @db.Text
+  excerptEn     String   @db.Text
+  contentFr     String   @db.Text
+  contentEn     String   @db.Text
+  coverImage    String?
+  category      String
+  tags          String[]
+  published     Boolean  @default(false)
+  publishedAt   DateTime?
+  authorName    String   @default("KDIGIT")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model ContactMessage {
+  id        String        @id @default(cuid())
+  name      String
+  phone     String?
+  email     String
+  subject   String
+  message   String        @db.Text
+  status    MessageStatus @default(NEW)
+  ipAddress String?
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+}
+
+model QuoteRequest {
+  id          String      @id @default(cuid())
+  name        String
+  phone       String
+  email       String
+  company     String?
+  serviceType String
+  budget      String?
+  deadline    String?
+  description String      @db.Text
+  fileUrl     String?
+  status      QuoteStatus @default(NEW)
+  ipAddress   String?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model HeroSlide {
+  id               String   @id @default(cuid())
+  slug             String   @unique
+  badgeFr          String
+  badgeEn          String
+  titleFr          String
+  titleEn          String
+  highlightFr      String
+  highlightEn      String
+  subtitleFr       String   @db.Text
+  subtitleEn       String   @db.Text
+  image            String
+  ctaHref          String   @default("/devis")
+  ctaSecondaryHref String   @default("/services")
+  order            Int      @default(0)
+  published        Boolean  @default(true)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}

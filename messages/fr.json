@@ -1,0 +1,159 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "about": "À propos",
+    "services": "Services",
+    "portfolio": "Réalisations",
+    "blog": "Blog",
+    "contact": "Contact",
+    "quote": "Demander un devis"
+  },
+  "hero": {
+    "badge": "Solutions digitales innovantes",
+    "title": "Transformez votre vision en",
+    "titleHighlight": "réalité digitale",
+    "subtitle": "KDIGIT accompagne les entreprises et particuliers dans leur transformation digitale grâce à des solutions web, mobiles et logicielles innovantes, performantes et adaptées à leurs besoins.",
+    "cta": "Demander un devis",
+    "ctaSecondary": "Découvrir nos services",
+    "trusted": "Ils nous font confiance"
+  },
+  "stats": {
+    "title": "KDIGIT en chiffres"
+  },
+  "why": {
+    "title": "Pourquoi choisir KDIGIT ?",
+    "subtitle": "Une expertise reconnue au service de votre croissance digitale"
+  },
+  "services": {
+    "title": "Nos services",
+    "subtitle": "Des solutions complètes pour tous vos besoins digitaux",
+    "viewAll": "Voir tous les services",
+    "learnMore": "En savoir plus"
+  },
+  "portfolio": {
+    "title": "Nos réalisations",
+    "subtitle": "Des projets concrets qui témoignent de notre expertise",
+    "viewAll": "Voir toutes les réalisations",
+    "viewProject": "Voir le projet",
+    "technologies": "Technologies",
+    "results": "Résultats obtenus"
+  },
+  "testimonials": {
+    "title": "Ce que disent nos clients",
+    "subtitle": "La satisfaction client au cœur de notre démarche"
+  },
+  "methodology": {
+    "title": "Notre méthodologie",
+    "subtitle": "Un processus éprouvé pour des résultats garantis"
+  },
+  "cta": {
+    "title": "Prêt à lancer votre projet ?",
+    "subtitle": "Contactez-nous dès aujourd'hui pour un devis gratuit et personnalisé",
+    "button": "Demander un devis gratuit",
+    "contact": "Nous contacter"
+  },
+  "contact": {
+    "title": "Contactez-nous",
+    "subtitle": "Notre équipe est à votre écoute pour répondre à toutes vos questions",
+    "form": {
+      "name": "Nom complet",
+      "phone": "Téléphone",
+      "email": "Email",
+      "subject": "Objet",
+      "message": "Message",
+      "submit": "Envoyer le message",
+      "sending": "Envoi en cours...",
+      "success": "Message envoyé avec succès ! Nous vous répondrons rapidement.",
+      "error": "Une erreur est survenue. Veuillez réessayer."
+    },
+    "info": {
+      "phone": "Téléphone",
+      "whatsapp": "WhatsApp",
+      "email": "Email",
+      "address": "Adresse",
+      "hours": "Horaires",
+      "hoursValue": "Lun - Ven : 9h - 18h"
+    }
+  },
+  "quote": {
+    "title": "Demander un devis",
+    "subtitle": "Décrivez votre projet et recevez une proposition personnalisée sous 48h",
+    "form": {
+      "name": "Nom complet",
+      "phone": "Téléphone",
+      "email": "Email",
+      "company": "Entreprise (optionnel)",
+      "serviceType": "Type de prestation",
+      "budget": "Budget estimé",
+      "deadline": "Délai souhaité",
+      "description": "Description du projet",
+      "file": "Document joint (optionnel)",
+      "submit": "Envoyer la demande",
+      "sending": "Envoi en cours...",
+      "success": "Demande envoyée ! Notre équipe vous contactera sous 48h.",
+      "error": "Une erreur est survenue. Veuillez réessayer.",
+      "selectService": "Sélectionnez une prestation"
+    }
+  },
+  "about": {
+    "title": "À propos de KDIGIT",
+    "subtitle": "Votre partenaire de confiance pour la transformation digitale",
+    "history": {
+      "title": "Notre histoire",
+      "content": "Fondée avec la vision de démocratiser l'accès aux solutions digitales de qualité, KDIGIT s'est imposée comme un acteur majeur du développement web, mobile et logiciel. Notre parcours est marqué par l'excellence technique et l'engagement envers nos clients."
+    },
+    "vision": {
+      "title": "Notre vision",
+      "content": "Devenir le partenaire digital de référence en accompagnant chaque entreprise, administration et particulier vers une transformation numérique réussie et durable."
+    },
+    "mission": {
+      "title": "Notre mission",
+      "content": "Concevoir et développer des solutions digitales innovantes, performantes et adaptées aux besoins spécifiques de chaque client, en garantissant qualité, sécurité et satisfaction."
+    },
+    "values": {
+      "title": "Nos valeurs",
+      "innovation": "Innovation",
+      "innovationDesc": "Nous repoussons les limites technologiques pour offrir des solutions d'avant-garde.",
+      "excellence": "Excellence",
+      "excellenceDesc": "Chaque projet est réalisé avec le plus haut niveau de qualité et de rigueur.",
+      "trust": "Confiance",
+      "trustDesc": "La transparence et l'honnêteté sont au cœur de nos relations clients.",
+      "commitment": "Engagement",
+      "commitmentDesc": "Nous nous investissons pleinement dans la réussite de vos projets."
+    },
+    "team": {
+      "title": "Notre équipe",
+      "subtitle": "Des experts passionnés à votre service"
+    }
+  },
+  "blog": {
+    "title": "Blog & Actualités",
+    "subtitle": "Conseils, tendances et innovations du monde digital",
+    "readMore": "Lire l'article",
+    "categories": "Catégories",
+    "all": "Tous",
+    "noPosts": "Aucun article pour le moment."
+  },
+  "footer": {
+    "description": "KDIGIT – L'innovation numérique au service de votre croissance.",
+    "services": "Services",
+    "company": "Entreprise",
+    "legal": "Mentions légales",
+    "privacy": "Politique de confidentialité",
+    "rights": "Tous droits réservés."
+  },
+  "common": {
+    "loading": "Chargement...",
+    "back": "Retour",
+    "readMore": "En savoir plus",
+    "getQuote": "Obtenir un devis"
+  },
+  "cookies": {
+    "title": "Cookies & données personnelles",
+    "description": "En utilisant notre site, nous pouvons collecter des informations vous concernant (cookies, formulaires de contact et de devis). En cliquant sur « Accepter », vous consentez à l'utilisation des cookies et au traitement de vos données personnelles conformément à notre",
+    "privacyLink": "politique de confidentialité",
+    "accept": "J'accepte les cookies et mes données",
+    "dataNote": "Données concernées : nom, email, téléphone, messages et préférences de navigation.",
+    "consentRequired": "Veuillez accepter les cookies et la politique de confidentialité avant d'envoyer vos informations."
+  }
+}

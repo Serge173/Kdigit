@@ -1,0 +1,159 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "services": "Services",
+    "portfolio": "Portfolio",
+    "blog": "Blog",
+    "contact": "Contact",
+    "quote": "Request a quote"
+  },
+  "hero": {
+    "badge": "Innovative digital solutions",
+    "title": "Transform your vision into",
+    "titleHighlight": "digital reality",
+    "subtitle": "KDIGIT supports businesses and individuals in their digital transformation with innovative, performant web, mobile and software solutions tailored to their needs.",
+    "cta": "Request a quote",
+    "ctaSecondary": "Discover our services",
+    "trusted": "They trust us"
+  },
+  "stats": {
+    "title": "KDIGIT in numbers"
+  },
+  "why": {
+    "title": "Why choose KDIGIT?",
+    "subtitle": "Recognized expertise at the service of your digital growth"
+  },
+  "services": {
+    "title": "Our services",
+    "subtitle": "Complete solutions for all your digital needs",
+    "viewAll": "View all services",
+    "learnMore": "Learn more"
+  },
+  "portfolio": {
+    "title": "Our work",
+    "subtitle": "Real projects that demonstrate our expertise",
+    "viewAll": "View all projects",
+    "viewProject": "View project",
+    "technologies": "Technologies",
+    "results": "Results achieved"
+  },
+  "testimonials": {
+    "title": "What our clients say",
+    "subtitle": "Client satisfaction at the heart of our approach"
+  },
+  "methodology": {
+    "title": "Our methodology",
+    "subtitle": "A proven process for guaranteed results"
+  },
+  "cta": {
+    "title": "Ready to launch your project?",
+    "subtitle": "Contact us today for a free, personalized quote",
+    "button": "Get a free quote",
+    "contact": "Contact us"
+  },
+  "contact": {
+    "title": "Contact us",
+    "subtitle": "Our team is here to answer all your questions",
+    "form": {
+      "name": "Full name",
+      "phone": "Phone",
+      "email": "Email",
+      "subject": "Subject",
+      "message": "Message",
+      "submit": "Send message",
+      "sending": "Sending...",
+      "success": "Message sent successfully! We will respond shortly.",
+      "error": "An error occurred. Please try again."
+    },
+    "info": {
+      "phone": "Phone",
+      "whatsapp": "WhatsApp",
+      "email": "Email",
+      "address": "Address",
+      "hours": "Hours",
+      "hoursValue": "Mon - Fri: 9am - 6pm"
+    }
+  },
+  "quote": {
+    "title": "Request a quote",
+    "subtitle": "Describe your project and receive a personalized proposal within 48h",
+    "form": {
+      "name": "Full name",
+      "phone": "Phone",
+      "email": "Email",
+      "company": "Company (optional)",
+      "serviceType": "Service type",
+      "budget": "Estimated budget",
+      "deadline": "Desired deadline",
+      "description": "Project description",
+      "file": "Attached document (optional)",
+      "submit": "Submit request",
+      "sending": "Sending...",
+      "success": "Request sent! Our team will contact you within 48h.",
+      "error": "An error occurred. Please try again.",
+      "selectService": "Select a service"
+    }
+  },
+  "about": {
+    "title": "About KDIGIT",
+    "subtitle": "Your trusted partner for digital transformation",
+    "history": {
+      "title": "Our story",
+      "content": "Founded with the vision of democratizing access to quality digital solutions, KDIGIT has established itself as a major player in web, mobile and software development. Our journey is marked by technical excellence and commitment to our clients."
+    },
+    "vision": {
+      "title": "Our vision",
+      "content": "To become the reference digital partner by supporting every business, administration and individual towards successful and sustainable digital transformation."
+    },
+    "mission": {
+      "title": "Our mission",
+      "content": "Design and develop innovative, performant digital solutions tailored to each client's specific needs, ensuring quality, security and satisfaction."
+    },
+    "values": {
+      "title": "Our values",
+      "innovation": "Innovation",
+      "innovationDesc": "We push technological boundaries to deliver cutting-edge solutions.",
+      "excellence": "Excellence",
+      "excellenceDesc": "Every project is delivered with the highest level of quality and rigor.",
+      "trust": "Trust",
+      "trustDesc": "Transparency and honesty are at the heart of our client relationships.",
+      "commitment": "Commitment",
+      "commitmentDesc": "We are fully invested in the success of your projects."
+    },
+    "team": {
+      "title": "Our team",
+      "subtitle": "Passionate experts at your service"
+    }
+  },
+  "blog": {
+    "title": "Blog & News",
+    "subtitle": "Tips, trends and innovations from the digital world",
+    "readMore": "Read article",
+    "categories": "Categories",
+    "all": "All",
+    "noPosts": "No articles yet."
+  },
+  "footer": {
+    "description": "KDIGIT – Digital innovation at the service of your growth.",
+    "services": "Services",
+    "company": "Company",
+    "legal": "Legal notice",
+    "privacy": "Privacy policy",
+    "rights": "All rights reserved."
+  },
+  "common": {
+    "loading": "Loading...",
+    "back": "Back",
+    "readMore": "Learn more",
+    "getQuote": "Get a quote"
+  },
+  "cookies": {
+    "title": "Cookies & personal data",
+    "description": "When you use our website, we may collect information about you (cookies, contact and quote forms). By clicking \"Accept\", you consent to the use of cookies and the processing of your personal data in accordance with our",
+    "privacyLink": "privacy policy",
+    "accept": "I accept cookies and my data",
+    "dataNote": "Data concerned: name, email, phone, messages and browsing preferences.",
+    "consentRequired": "Please accept cookies and the privacy policy before submitting your information."
+  }
+}
