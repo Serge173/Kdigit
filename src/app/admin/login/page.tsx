@@ -24,7 +24,14 @@ export default function AdminLoginPage() {
       });
 
       if (!res.ok) {
-        toast.error("Connexion échouée", { description: "Identifiants incorrects." });
+        const data = await res.json().catch(() => ({}));
+        const description =
+          data.error === "Database unavailable"
+            ? "La base de données n'est pas encore initialisée. Réessayez après le déploiement."
+            : res.status === 401
+              ? "Identifiants incorrects."
+              : "Erreur serveur. Réessayez dans quelques instants.";
+        toast.error("Connexion échouée", { description });
         return;
       }
 

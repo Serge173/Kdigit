@@ -35,6 +35,16 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Invalid data" }, { status: 400 });
     }
     console.error("Login error:", error);
-    return NextResponse.json({ error: "Server error" }, { status: 500 });
+    const message = error instanceof Error ? error.message : String(error);
+    const isDbError =
+      message.includes("P1001") ||
+      message.includes("P1017") ||
+      message.includes("P2021") ||
+      message.includes("Can't reach database") ||
+      message.includes("does not exist");
+    return NextResponse.json(
+      { error: isDbError ? "Database unavailable" : "Server error" },
+      { status: isDbError ? 503 : 500 }
+    );
   }
 }

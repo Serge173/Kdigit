@@ -8,7 +8,7 @@ const databaseUrl = ensureDatabaseUrl();
 export const prisma =
   globalForPrisma.prisma ||
   new PrismaClient({
-    ...(databaseUrl ? { datasourceUrl: databaseUrl } : {}),
+    ...(databaseUrl ? { datasources: { db: { url: databaseUrl } } } : {}),
     log: process.env.NODE_ENV === "development" ? ["error", "warn"] : ["error"],
   });
 
