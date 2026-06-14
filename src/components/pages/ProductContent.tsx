@@ -6,7 +6,6 @@ import { Link } from "@/i18n/routing";
 import {
   ArrowLeft,
   Check,
-  Sparkles,
   ShoppingBag,
   FileText,
   MessageCircle,
@@ -49,10 +48,9 @@ export function ProductContent({ product }: { product: ProductData }) {
             />
           </div>
 
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 text-primary-light text-sm font-medium mb-4 border border-primary/30">
-            <Sparkles className="w-4 h-4" />
+          <p className="inline-block px-4 py-2 rounded-full bg-primary/20 text-primary-light text-sm font-semibold mb-4 border border-primary/30 tracking-wide">
             {isFr ? "Produit phare KDIGIT" : "KDIGIT flagship product"}
-          </div>
+          </p>
 
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
             {product.name}

@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/i18n/routing";
-import { ArrowRight, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import type { HeroSlideData } from "@/lib/data/hero-slides";
 import { cn } from "@/lib/utils";
 
@@ -119,10 +119,9 @@ export function Hero({ slides }: HeroProps) {
             transition={{ duration: 0.45 }}
             className="w-full max-w-2xl"
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/25 text-primary-light text-xs sm:text-sm font-medium mb-4 border border-primary/30 backdrop-blur-sm">
-              <Sparkles className="w-3.5 h-3.5" />
+            <p className="inline-block px-3 py-1.5 rounded-full bg-primary/25 text-primary-light text-xs sm:text-sm font-semibold mb-4 border border-primary/30 backdrop-blur-sm tracking-wide">
               {isFr ? slide.badgeFr : slide.badgeEn}
-            </div>
+            </p>
 
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-[1.15] tracking-tight text-white">
               {isFr ? slide.titleFr : slide.titleEn}{" "}
