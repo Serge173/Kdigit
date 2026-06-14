@@ -11,7 +11,8 @@ const path = require("path");
 const jwtSecret = crypto.randomBytes(32).toString("hex");
 
 const vars = {
-  DATABASE_URL: "postgresql://USER:PASSWORD@HOST/kdigit?sslmode=require",
+  DATABASE_URL: "postgresql://USER:PASSWORD@HOST-pooler.region.aws.neon.tech/kdigit?sslmode=require",
+  DIRECT_URL: "postgresql://USER:PASSWORD@HOST.region.aws.neon.tech/kdigit?sslmode=require",
   JWT_SECRET: jwtSecret,
   SMTP_HOST: "smtp.gmail.com",
   SMTP_PORT: "587",
@@ -20,7 +21,7 @@ const vars = {
   SMTP_FROM: "KDIGIT <contact@kdigit.com>",
   ADMIN_EMAIL: "admin@kdigit.com",
   NEXT_PUBLIC_SITE_URL: "https://kdigit.com",
-  NEXT_PUBLIC_WHATSAPP_NUMBER: "33600000000",
+  NEXT_PUBLIC_WHATSAPP_NUMBER: "2250708967624",
   CONTACT_RATE_LIMIT_PER_HOUR: "10",
   NODE_ENV: "production",
 };

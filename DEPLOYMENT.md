@@ -31,26 +31,42 @@ Ce guide décrit le déploiement en production sur **Vercel** avec une base **Po
 
 ---
 
-## Étape 2 — Initialiser la base de données
+## Étape 2 — Créer la base Neon
 
-En local, avec la connection string de production :
+Guide détaillé : **[NEON-SETUP.md](./NEON-SETUP.md)**
 
-```bash
-# Copier la variable
-DATABASE_URL="postgresql://..." 
+Résumé :
+1. Créer un projet sur [neon.tech](https://neon.tech)
+2. Copier **2 URLs** : poolée (`DATABASE_URL`) et directe (`DIRECT_URL`)
+3. Les coller dans `.env.production.local`
 
-# Pousser le schéma
-npx prisma db push
+## Étape 3 — Initialiser la base de données
 
-# Peupler les données initiales
-npm run db:seed
+```powershell
+.\scripts\setup-production-db.ps1
 ```
 
 > **Important** : changez le mot de passe admin après le premier déploiement.
 
 ---
 
-## Étape 3 — Déployer sur Vercel
+## Étape 4 — Déployer sur Vercel
+
+### Déploiement automatique (recommandé)
+
+```powershell
+# 1. Connexion Vercel (navigateur)
+vercel login
+
+# 2. Déploiement complet (env + BDD + build + prod)
+npm run deploy
+```
+
+Le script `scripts/deploy-vercel.ps1` configure tout automatiquement :
+- Variables d'environnement Vercel (production + preview)
+- Schéma Prisma + seed
+- Build de vérification
+- Déploiement `--prod`
 
 ### Via l'interface web
 
@@ -74,13 +90,14 @@ vercel --prod
 
 ---
 
-## Étape 4 — Variables d'environnement Vercel
+## Étape 5 — Variables d'environnement Vercel
 
 Dans **Vercel → Project → Settings → Environment Variables** :
 
 | Variable | Valeur | Environnement |
 |----------|--------|---------------|
-| `DATABASE_URL` | Connection string PostgreSQL | Production, Preview |
+| `DATABASE_URL` | Connection string PostgreSQL **poolée** (Neon: host `-pooler`) | Production, Preview |
+| `DIRECT_URL` | Connection string **directe** (migrations Prisma) | Production, Preview |
 | `JWT_SECRET` | Clé aléatoire longue (32+ caractères) | Production, Preview |
 | `NEXT_PUBLIC_SITE_URL` | `https://votre-domaine.com` | Production |
 | `NEXT_PUBLIC_WHATSAPP_NUMBER` | `2250708967624` (sans +) | Production |
@@ -100,7 +117,7 @@ node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 
 ---
 
-## Étape 5 — Configurer le domaine
+## Étape 6 — Configurer le domaine
 
 1. Vercel → Project → Settings → Domains
 2. Ajouter `kdigit.com` et `www.kdigit.com`
@@ -117,7 +134,7 @@ CNAME   www     cname.vercel-dns.com
 
 ---
 
-## Étape 6 — Vérifications post-déploiement
+## Étape 7 — Vérifications post-déploiement
 
 - [ ] Site accessible sur `https://votre-domaine.com`
 - [ ] Pages FR et EN fonctionnelles (`/en/...`)

@@ -14,6 +14,10 @@
     "db:studio": "prisma studio",
     "db:setup": "prisma db push && npm run db:seed",
     "db:reset": "prisma db push --force-reset && npm run db:seed",
+    "deploy": "powershell -ExecutionPolicy Bypass -File scripts/deploy-vercel.ps1",
+    "deploy:vercel": "powershell -ExecutionPolicy Bypass -File scripts/deploy-vercel.ps1",
+    "db:setup:prod": "powershell -ExecutionPolicy Bypass -File scripts/setup-production-db.ps1",
+    "vercel-build": "node scripts/vercel-build.js",
     "vercel:env": "node scripts/generate-vercel-env.js",
     "postinstall": "prisma generate"
   },
