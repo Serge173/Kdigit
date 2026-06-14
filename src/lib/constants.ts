@@ -1,3 +1,5 @@
+import { getSiteUrl } from "@/lib/site-url";
+
 export const SITE = {
   name: "KDIGIT",
   logo: "/images/kdigit-logo.png",
@@ -11,7 +13,7 @@ export const SITE = {
   phone: "+225 07 08 96 76 24",
   whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "2250708967624",
   address: "Paris, France",
-  url: process.env.NEXT_PUBLIC_SITE_URL || "https://kdigit.com",
+  url: getSiteUrl(),
   social: {
     linkedin: "https://linkedin.com/company/kdigit",
     facebook: "https://facebook.com/kdigit",

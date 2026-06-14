@@ -10,7 +10,25 @@ const envSchema = z.object({
   SMTP_PASS: z.string().optional(),
   SMTP_FROM: z.string().optional(),
   ADMIN_EMAIL: z.string().email().optional(),
-  NEXT_PUBLIC_SITE_URL: z.string().url().default("http://localhost:3000"),
+  NEXT_PUBLIC_SITE_URL: z
+    .string()
+    .optional()
+    .transform((v) => {
+      if (!v) return "http://localhost:3000";
+      const match = v.match(/https?:\/\/[^\s\]"']+/i);
+      if (match) {
+        try {
+          return new URL(match[0]).origin;
+        } catch {
+          return "http://localhost:3000";
+        }
+      }
+      try {
+        return new URL(v).origin;
+      } catch {
+        return "http://localhost:3000";
+      }
+    }),
   NEXT_PUBLIC_WHATSAPP_NUMBER: z.string().default("2250708967624"),
   CONTACT_RATE_LIMIT_PER_HOUR: z.coerce.number().default(10),
   NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
