@@ -9,10 +9,10 @@ export const SITE = {
     "KDIGIT accompagne les entreprises et particuliers dans leur transformation digitale grâce à des solutions web, mobiles et logicielles innovantes.",
   descriptionEn:
     "KDIGIT supports businesses and individuals in their digital transformation with innovative web, mobile and software solutions.",
-  email: "contact@kdigit.com",
+  email: "Skeayeni@gmail.com",
   phone: "+225 07 08 96 76 24",
   whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "2250708967624",
-  address: "Paris, France",
+  address: "Cocody, Abidjan, Côte d'Ivoire",
   url: getSiteUrl(),
   social: {
     linkedin: "https://linkedin.com/company/kdigit",
