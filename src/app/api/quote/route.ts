@@ -3,7 +3,10 @@ import { z } from "zod";
 import { writeFile, mkdir } from "fs/promises";
 import path from "path";
 import { prisma } from "@/lib/prisma";
+import { getDatabaseUrl } from "@/lib/database-url";
 import { sendEmail, quoteNotificationHtml } from "@/lib/email";
+
+export const dynamic = "force-dynamic";
 
 const schema = z.object({
   name: z.string().min(2).max(100),
@@ -48,14 +51,22 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: "File too large" }, { status: 400 });
       }
 
-      const uploadsDir = path.join(process.cwd(), "public", "uploads");
-      await mkdir(uploadsDir, { recursive: true });
+      try {
+        const uploadsDir = path.join(process.cwd(), "public", "uploads");
+        await mkdir(uploadsDir, { recursive: true });
 
-      const ext = path.extname(file.name);
-      const filename = `quote-${Date.now()}${ext}`;
-      const buffer = Buffer.from(await file.arrayBuffer());
-      await writeFile(path.join(uploadsDir, filename), buffer);
-      fileUrl = `/uploads/${filename}`;
+        const ext = path.extname(file.name);
+        const filename = `quote-${Date.now()}${ext}`;
+        const buffer = Buffer.from(await file.arrayBuffer());
+        await writeFile(path.join(uploadsDir, filename), buffer);
+        fileUrl = `/uploads/${filename}`;
+      } catch (fileError) {
+        console.error("Quote file upload error:", fileError);
+      }
+    }
+
+    if (!getDatabaseUrl()) {
+      return NextResponse.json({ error: "Database unavailable" }, { status: 503 });
     }
 
     await prisma.quoteRequest.create({

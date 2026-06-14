@@ -83,9 +83,18 @@ if (-not $SkipEnv) {
         Write-Host "  JWT_SECRET genere automatiquement" -ForegroundColor Yellow
     }
 
+    $dbUrl = $env:DATABASE_URL
+    if (-not $dbUrl) {
+        $dbUrl = $env:DATABASE_POSTGRES_PRISMA_URL
+    }
+    if (-not $dbUrl) {
+        $dbUrl = $env:DATABASE_POSTGRES_URL
+    }
+    $directUrl = if ($env:DIRECT_URL) { $env:DIRECT_URL } elseif ($env:DATABASE_POSTGRES_URL_NON_POOLING) { $env:DATABASE_POSTGRES_URL_NON_POOLING } else { $dbUrl }
+
     $vars = @{
-        DATABASE_URL = $env:DATABASE_URL
-        DIRECT_URL = if ($env:DIRECT_URL) { $env:DIRECT_URL } else { $env:DATABASE_URL }
+        DATABASE_URL = $dbUrl
+        DIRECT_URL = $directUrl
         JWT_SECRET = $env:JWT_SECRET
         SMTP_HOST = $env:SMTP_HOST
         SMTP_PORT = $env:SMTP_PORT
@@ -114,7 +123,16 @@ if (-not $SkipEnv) {
 if (-not $SkipDb) {
     Write-Step "[4/6] Initialisation base PostgreSQL..."
     if (-not $env:DATABASE_URL) { Load-ProductionEnv }
-    if ($env:DATABASE_URL -like "*USER:PASSWORD*" -or $env:DATABASE_URL -like "*localhost*") {
+    if (-not $env:DATABASE_URL) {
+        if ($env:DATABASE_POSTGRES_URL_NON_POOLING) {
+            $env:DATABASE_URL = $env:DATABASE_POSTGRES_URL_NON_POOLING
+        } elseif ($env:DATABASE_POSTGRES_PRISMA_URL) {
+            $env:DATABASE_URL = $env:DATABASE_POSTGRES_PRISMA_URL
+        } elseif ($env:DATABASE_POSTGRES_URL) {
+            $env:DATABASE_URL = $env:DATABASE_POSTGRES_URL
+        }
+    }
+    if (-not $env:DATABASE_URL -or $env:DATABASE_URL -like "*USER:PASSWORD*" -or $env:DATABASE_URL -like "*localhost*") {
         Write-Host "  ERREUR: DATABASE_URL de production invalide dans .env.production.local" -ForegroundColor Red
         Write-Host "  Creez une base sur https://neon.tech puis copiez la connection string." -ForegroundColor Yellow
         exit 1
