@@ -1,6 +1,6 @@
 # KDIGIT — Initialise la base PostgreSQL de production (schéma + données)
 # Usage : .\scripts\setup-production-db.ps1
-# Prérequis : DATABASE_URL défini (Neon/Supabase avec ?sslmode=require)
+# Prérequis : DATABASE_URL ou variables Neon Vercel (DATABASE_POSTGRES_*)
 
 $ErrorActionPreference = "Stop"
 $ProjectRoot = Split-Path -Parent $PSScriptRoot
@@ -9,12 +9,18 @@ Set-Location $ProjectRoot
 if (-not $env:DATABASE_URL) {
     if ($env:DATABASE_POSTGRES_URL_NON_POOLING) {
         $env:DATABASE_URL = $env:DATABASE_POSTGRES_URL_NON_POOLING
+    } elseif ($env:DATABASE_POSTGRES_PRISMA_URL) {
+        $env:DATABASE_URL = $env:DATABASE_POSTGRES_PRISMA_URL
+    } elseif ($env:DATABASE_POSTGRES_URL) {
+        $env:DATABASE_URL = $env:DATABASE_POSTGRES_URL
     }
 }
+
+if (-not $env:DATABASE_URL) {
     Write-Host "ERREUR: DATABASE_URL non defini." -ForegroundColor Red
     Write-Host "Exemple:" -ForegroundColor Yellow
-    Write-Host '  $env:DATABASE_URL="postgresql://user:pass@host/db?sslmode=require"' -ForegroundColor White
-    Write-Host "  .\scripts\setup-production-db.ps1" -ForegroundColor White
+    Write-Host '  vercel env pull .env.vercel.local' -ForegroundColor White
+    Write-Host '  .\scripts\init-vercel-db.ps1' -ForegroundColor White
     exit 1
 }
 

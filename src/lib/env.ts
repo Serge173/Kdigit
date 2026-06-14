@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { getDatabaseUrl } from "@/lib/database-url";
 
 const envSchema = z.object({
   DATABASE_URL: z.string().min(1).optional(),
@@ -32,4 +33,4 @@ function loadEnv(): Env {
 export const env = loadEnv();
 
 export const isProduction = env.NODE_ENV === "production";
-export const isDatabaseConfigured = !!process.env.DATABASE_URL;
+export const isDatabaseConfigured = !!getDatabaseUrl();

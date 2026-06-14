@@ -12,6 +12,8 @@ function run(cmd) {
 
 const directUrl =
   process.env.DATABASE_POSTGRES_URL_NON_POOLING ||
+  process.env.DATABASE_URL_NON_POOLING ||
+  process.env.DIRECT_URL ||
   process.env.DATABASE_URL;
 
 if (directUrl) {
