@@ -1,7 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
+import { ensureDatabaseUrl } from "@/lib/database-url";
+import {
+  classifyDatabaseError,
+  databaseErrorResponse,
+  getClientIp,
+} from "@/lib/db-errors";
 import { sendEmail, contactNotificationHtml } from "@/lib/email";
+
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
 
 const schema = z.object({
   name: z.string().min(2).max(100),
@@ -38,10 +47,14 @@ export async function POST(request: NextRequest) {
     }
 
     const data = schema.parse(body);
-    const ip = request.headers.get("x-forwarded-for") || "unknown";
+    const ip = getClientIp(request);
 
     if (!checkRateLimit(ip)) {
       return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+    }
+
+    if (!ensureDatabaseUrl()) {
+      return NextResponse.json({ error: "Database unavailable" }, { status: 503 });
     }
 
     await prisma.contactMessage.create({
@@ -74,6 +87,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Invalid data" }, { status: 400 });
     }
     console.error("Contact error:", error);
-    return NextResponse.json({ error: "Server error" }, { status: 500 });
+    const { status, body: errBody } = databaseErrorResponse(classifyDatabaseError(error));
+    return NextResponse.json(errBody, { status });
   }
 }

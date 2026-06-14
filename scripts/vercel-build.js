@@ -19,8 +19,9 @@ const directUrl =
 if (directUrl) {
   process.env.DATABASE_URL = directUrl;
   try {
-    run("npx prisma db push");
+    run("npx prisma db push --accept-data-loss");
     run("npm run db:seed");
+    run("node scripts/verify-db.js");
   } catch (err) {
     console.error("[vercel-build] Database setup failed:", err.message);
     process.exit(1);

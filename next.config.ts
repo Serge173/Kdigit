@@ -1,11 +1,13 @@
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 
-// Neon via Vercel Storage (préfixe DATABASE_) n'expose pas DATABASE_URL directement.
-if (!process.env.DATABASE_URL) {
-  process.env.DATABASE_URL =
-    process.env.DATABASE_POSTGRES_PRISMA_URL ||
-    process.env.DATABASE_POSTGRES_URL;
+// Neon via Vercel Storage (préfixe DATABASE_) — toujours préférer l'URL Prisma.
+const resolvedDbUrl =
+  process.env.DATABASE_POSTGRES_PRISMA_URL ||
+  process.env.DATABASE_POSTGRES_URL ||
+  process.env.DATABASE_URL;
+if (resolvedDbUrl) {
+  process.env.DATABASE_URL = resolvedDbUrl;
 }
 
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");

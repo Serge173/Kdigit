@@ -3,20 +3,26 @@ import { z } from "zod";
 import { writeFile, mkdir } from "fs/promises";
 import path from "path";
 import { prisma } from "@/lib/prisma";
-import { getDatabaseUrl } from "@/lib/database-url";
+import { ensureDatabaseUrl } from "@/lib/database-url";
+import {
+  classifyDatabaseError,
+  databaseErrorResponse,
+  getClientIp,
+} from "@/lib/db-errors";
 import { sendEmail, quoteNotificationHtml } from "@/lib/email";
 
 export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
 
 const schema = z.object({
-  name: z.string().min(2).max(100),
-  phone: z.string().min(6).max(20),
-  email: z.string().email(),
-  company: z.string().max(100).optional(),
-  serviceType: z.string().min(1),
-  budget: z.string().max(50).optional(),
-  deadline: z.string().max(50).optional(),
-  description: z.string().min(20).max(10000),
+  name: z.string().trim().min(2).max(100),
+  phone: z.string().trim().min(6).max(20),
+  email: z.string().trim().email(),
+  company: z.string().trim().max(100).optional(),
+  serviceType: z.string().trim().min(1),
+  budget: z.string().trim().max(50).optional(),
+  deadline: z.string().trim().max(50).optional(),
+  description: z.string().trim().min(20).max(10000),
   website: z.string().max(0).optional(),
 });
 
@@ -25,15 +31,15 @@ export async function POST(request: NextRequest) {
     const formData = await request.formData();
 
     const raw = {
-      name: formData.get("name") as string,
-      phone: formData.get("phone") as string,
-      email: formData.get("email") as string,
-      company: (formData.get("company") as string) || undefined,
-      serviceType: formData.get("serviceType") as string,
-      budget: (formData.get("budget") as string) || undefined,
-      deadline: (formData.get("deadline") as string) || undefined,
-      description: formData.get("description") as string,
-      website: (formData.get("website") as string) || "",
+      name: String(formData.get("name") ?? ""),
+      phone: String(formData.get("phone") ?? ""),
+      email: String(formData.get("email") ?? ""),
+      company: String(formData.get("company") ?? "").trim() || undefined,
+      serviceType: String(formData.get("serviceType") ?? ""),
+      budget: String(formData.get("budget") ?? "").trim() || undefined,
+      deadline: String(formData.get("deadline") ?? "").trim() || undefined,
+      description: String(formData.get("description") ?? ""),
+      website: String(formData.get("website") ?? ""),
     };
 
     if (raw.website) {
@@ -41,7 +47,7 @@ export async function POST(request: NextRequest) {
     }
 
     const data = schema.parse(raw);
-    const ip = request.headers.get("x-forwarded-for") || "unknown";
+    const ip = getClientIp(request);
 
     let fileUrl: string | undefined;
     const file = formData.get("file") as File | null;
@@ -65,7 +71,7 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    if (!getDatabaseUrl()) {
+    if (!ensureDatabaseUrl()) {
       return NextResponse.json({ error: "Database unavailable" }, { status: 503 });
     }
 
@@ -95,7 +101,9 @@ export async function POST(request: NextRequest) {
     if (error instanceof z.ZodError) {
       return NextResponse.json({ error: "Invalid data" }, { status: 400 });
     }
+
     console.error("Quote error:", error);
-    return NextResponse.json({ error: "Server error" }, { status: 500 });
+    const { status, body } = databaseErrorResponse(classifyDatabaseError(error));
+    return NextResponse.json(body, { status });
   }
 }
