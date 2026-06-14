@@ -20,10 +20,10 @@ import { cn } from "@/lib/utils";
 
 const navItems = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
-  { href: "/admin/devis", label: "Devis", icon: ClipboardList, badgeKey: "quotesNew" as const },
-  { href: "/admin/slides", label: "Slides Hero", icon: Images },
   { href: "/admin/projets", label: "Réalisations", icon: FolderOpen },
   { href: "/admin/articles", label: "Articles", icon: FileText },
+  { href: "/admin/slides", label: "Slides Hero", icon: Images },
+  { href: "/admin/devis", label: "Devis", icon: ClipboardList, badgeKey: "quotesNew" as const },
   { href: "/admin/messages", label: "Messages", icon: MessageSquare, badgeKey: "messagesNew" as const },
   { href: "/admin/utilisateurs", label: "Utilisateurs", icon: Users },
 ];
