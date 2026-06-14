@@ -10,6 +10,10 @@ export function classifyDatabaseError(error: unknown): DatabaseErrorKind {
     }
   }
 
+  if (error instanceof Prisma.PrismaClientValidationError) {
+    return "unknown";
+  }
+
   const message = error instanceof Error ? error.message : String(error);
   if (
     message.includes("does not exist") ||

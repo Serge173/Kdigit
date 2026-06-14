@@ -75,9 +75,11 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Database unavailable" }, { status: 503 });
     }
 
+    const { website: _honeypot, ...quoteData } = data;
+
     await prisma.quoteRequest.create({
       data: {
-        ...data,
+        ...quoteData,
         fileUrl,
         ipAddress: ip,
       },
