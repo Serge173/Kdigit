@@ -1,14 +1,9 @@
-import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { Plus, Pencil } from "lucide-react";
+import { getAdminUsers } from "@/lib/admin-data";
 
 export default async function AdminUsersPage() {
-  let users: Awaited<ReturnType<typeof prisma.user.findMany>> = [];
-  try {
-    users = await prisma.user.findMany({ orderBy: { createdAt: "desc" } });
-  } catch {
-    // DB not connected
-  }
+  const users = await getAdminUsers();
 
   return (
     <div>
@@ -40,7 +35,7 @@ export default async function AdminUsersPage() {
             {users.length === 0 ? (
               <tr>
                 <td colSpan={5} className="px-6 py-12 text-center text-muted-foreground">
-                  Aucun utilisateur. Lancez <code className="bg-muted px-2 py-1 rounded">npm run db:seed</code>
+                  Aucun utilisateur.
                 </td>
               </tr>
             ) : (

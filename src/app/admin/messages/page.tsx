@@ -1,13 +1,8 @@
-import { prisma } from "@/lib/prisma";
 import { MessagesList } from "@/components/admin/MessagesList";
+import { getAdminMessages } from "@/lib/admin-data";
 
 export default async function AdminMessagesPage() {
-  let messages: Awaited<ReturnType<typeof prisma.contactMessage.findMany>> = [];
-  try {
-    messages = await prisma.contactMessage.findMany({ orderBy: { createdAt: "desc" } });
-  } catch {
-    // DB not connected
-  }
+  const messages = await getAdminMessages();
 
   const serialized = messages.map((m) => ({
     ...m,

@@ -1,14 +1,9 @@
-import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { Plus, Pencil } from "lucide-react";
+import { getAdminProjects } from "@/lib/admin-data";
 
 export default async function AdminProjectsPage() {
-  let projects: Awaited<ReturnType<typeof prisma.project.findMany>> = [];
-  try {
-    projects = await prisma.project.findMany({ orderBy: { order: "asc" } });
-  } catch {
-    // DB not connected
-  }
+  const projects = await getAdminProjects();
 
   return (
     <div>
@@ -39,7 +34,7 @@ export default async function AdminProjectsPage() {
             {projects.length === 0 ? (
               <tr>
                 <td colSpan={4} className="px-6 py-12 text-center text-muted-foreground">
-                  Aucune réalisation. Connectez PostgreSQL et lancez <code className="bg-muted px-2 py-1 rounded">npm run db:seed</code>
+                  Aucune réalisation. <Link href="/admin/projets/nouveau" className="text-primary hover:underline">Créer la première</Link>
                 </td>
               </tr>
             ) : (

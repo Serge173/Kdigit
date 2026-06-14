@@ -1,10 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Plus, Pencil } from "lucide-react";
-import { getAllHeroSlidesAdmin } from "@/lib/data/hero-slides";
+import { getAdminHeroSlides } from "@/lib/admin-data";
 
 export default async function AdminSlidesPage() {
-  const slides = await getAllHeroSlidesAdmin();
+  const slides = await getAdminHeroSlides();
 
   return (
     <div>

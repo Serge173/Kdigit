@@ -1,19 +1,8 @@
-"use client";
+import { AdminShell } from "@/components/admin/AdminShell";
 
-import { usePathname } from "next/navigation";
-import { AdminSidebar } from "@/components/admin/AdminSidebar";
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname();
-
-  if (pathname === "/admin/login") {
-    return <>{children}</>;
-  }
-
-  return (
-    <div className="min-h-screen flex bg-muted">
-      <AdminSidebar />
-      <main className="flex-1 p-8 overflow-auto">{children}</main>
-    </div>
-  );
+  return <AdminShell>{children}</AdminShell>;
 }

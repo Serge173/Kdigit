@@ -1,13 +1,8 @@
-import { prisma } from "@/lib/prisma";
 import { QuotesList } from "@/components/admin/QuotesList";
+import { getAdminQuotes } from "@/lib/admin-data";
 
 export default async function AdminQuotesPage() {
-  let quotes: Awaited<ReturnType<typeof prisma.quoteRequest.findMany>> = [];
-  try {
-    quotes = await prisma.quoteRequest.findMany({ orderBy: { createdAt: "desc" } });
-  } catch {
-    // DB not connected
-  }
+  const quotes = await getAdminQuotes();
 
   const serialized = quotes.map((q) => ({
     ...q,

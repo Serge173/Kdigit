@@ -1,23 +1,7 @@
 import Link from "next/link";
-import { prisma } from "@/lib/prisma";
 import { FolderOpen, FileText, MessageSquare, ClipboardList, ArrowRight } from "lucide-react";
 import { QuotesList } from "@/components/admin/QuotesList";
-
-async function getDashboardData() {
-  try {
-    const [projects, posts, messagesNew, quotesNew, quotesTotal, quotes] = await Promise.all([
-      prisma.project.count(),
-      prisma.blogPost.count({ where: { published: true } }),
-      prisma.contactMessage.count({ where: { status: "NEW" } }),
-      prisma.quoteRequest.count({ where: { status: "NEW" } }),
-      prisma.quoteRequest.count(),
-      prisma.quoteRequest.findMany({ orderBy: { createdAt: "desc" } }),
-    ]);
-    return { projects, posts, messagesNew, quotesNew, quotesTotal, quotes };
-  } catch {
-    return { projects: 0, posts: 0, messagesNew: 0, quotesNew: 0, quotesTotal: 0, quotes: [] };
-  }
-}
+import { getDashboardData } from "@/lib/admin-data";
 
 export default async function AdminDashboard() {
   const data = await getDashboardData();

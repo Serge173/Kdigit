@@ -1,14 +1,9 @@
-import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { Plus, Pencil } from "lucide-react";
+import { getAdminArticles } from "@/lib/admin-data";
 
 export default async function AdminArticlesPage() {
-  let posts: Awaited<ReturnType<typeof prisma.blogPost.findMany>> = [];
-  try {
-    posts = await prisma.blogPost.findMany({ orderBy: { createdAt: "desc" } });
-  } catch {
-    // DB not connected
-  }
+  const posts = await getAdminArticles();
 
   return (
     <div>
