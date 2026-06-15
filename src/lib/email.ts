@@ -1,4 +1,5 @@
 import nodemailer from "nodemailer";
+import { emailHeaderHtml } from "@/lib/branding";
 
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
@@ -44,6 +45,7 @@ export function contactNotificationHtml(data: {
   message: string;
 }) {
   return `
+    ${emailHeaderHtml()}
     <h2>Nouveau message de contact — KDIGIT</h2>
     <p><strong>Nom :</strong> ${data.name}</p>
     <p><strong>Email :</strong> ${data.email}</p>
@@ -65,6 +67,7 @@ export function quoteNotificationHtml(data: {
   description: string;
 }) {
   return `
+    ${emailHeaderHtml()}
     <h2>Nouvelle demande de devis — KDIGIT</h2>
     <p><strong>Nom :</strong> ${data.name}</p>
     <p><strong>Email :</strong> ${data.email}</p>

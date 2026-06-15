@@ -32,7 +32,7 @@ export function Logo({
     <Link href={href} className={cn("inline-flex items-center shrink-0 group", className)}>
       <Image
         src={SITE.logo}
-        alt={`${SITE.name} — Innovation digitale`}
+        alt={SITE.logoAlt}
         width={320}
         height={120}
         priority={priority}

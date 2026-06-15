@@ -1,9 +1,12 @@
 import { ImageResponse } from "next/og";
+import { getLogoDataUrl } from "@/lib/branding";
 
 export const size = { width: 180, height: 180 };
 export const contentType = "image/png";
 
-export default function AppleIcon() {
+export default async function AppleIcon() {
+  const src = await getLogoDataUrl();
+
   return new ImageResponse(
     (
       <div
@@ -13,15 +16,19 @@ export default function AppleIcon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "linear-gradient(135deg, #F97316 0%, #22C55E 100%)",
-          borderRadius: 36,
-          color: "white",
-          fontSize: 96,
-          fontWeight: 700,
-          fontFamily: "sans-serif",
+          background: "#000000",
+          padding: 16,
         }}
       >
-        K
+        <img
+          src={src}
+          alt=""
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "contain",
+          }}
+        />
       </div>
     ),
     { ...size }

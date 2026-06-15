@@ -59,9 +59,7 @@ export function AdminSidebar() {
   return (
     <aside className="w-64 bg-secondary text-white flex flex-col shrink-0">
       <div className="p-6 border-b border-white/10">
-        <Link href="/admin" className="flex items-center">
-          <Logo variant="admin" href="/admin" />
-        </Link>
+        <Logo variant="admin" href="/admin" nativeLink />
       </div>
 
       <nav className="flex-1 p-4 space-y-1">

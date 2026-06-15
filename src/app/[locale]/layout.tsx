@@ -9,6 +9,7 @@ import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
 import { CookieConsent } from "@/components/layout/CookieConsent";
 import { LangAttribute } from "@/components/layout/LangAttribute";
 import { SITE } from "@/lib/constants";
+import { LOGO_PATH } from "@/lib/branding";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -41,6 +42,11 @@ export async function generateMetadata({
     authors: [{ name: SITE.name, url: SITE.url }],
     creator: SITE.name,
     manifest: "/manifest.webmanifest",
+    icons: {
+      icon: [{ url: LOGO_PATH, type: "image/png" }],
+      apple: [{ url: LOGO_PATH, type: "image/png" }],
+      shortcut: LOGO_PATH,
+    },
     openGraph: {
       type: "website",
       locale: isFr ? "fr_FR" : "en_US",
@@ -49,11 +55,20 @@ export async function generateMetadata({
       title: SITE.name,
       description: isFr ? SITE.description : SITE.descriptionEn,
       url: SITE.url,
+      images: [
+        {
+          url: LOGO_PATH,
+          width: 1200,
+          height: 630,
+          alt: `${SITE.name} — Innovation digitale`,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: SITE.name,
       description: isFr ? SITE.description : SITE.descriptionEn,
+      images: [LOGO_PATH],
     },
     robots: { index: true, follow: true },
     alternates: {

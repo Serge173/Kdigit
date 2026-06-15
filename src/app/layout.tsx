@@ -1,6 +1,20 @@
+import type { Metadata } from "next";
 import { Poppins, Inter, Montserrat } from "next/font/google";
 import { Toaster } from "@/components/ui/Toaster";
+import { SITE } from "@/lib/constants";
+import { LOGO_PATH } from "@/lib/branding";
+import { getSiteUrl } from "@/lib/site-url";
 import "./globals.css";
+
+export const metadata: Metadata = {
+  metadataBase: new URL(getSiteUrl()),
+  applicationName: SITE.name,
+  icons: {
+    icon: [{ url: LOGO_PATH, type: "image/png" }],
+    apple: [{ url: LOGO_PATH, type: "image/png" }],
+    shortcut: LOGO_PATH,
+  },
+};
 
 const poppins = Poppins({
   variable: "--font-poppins",

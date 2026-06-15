@@ -3,6 +3,7 @@ import { getSiteUrl } from "@/lib/site-url";
 export const SITE = {
   name: "KDIGIT",
   logo: "/images/kdigit-logo.png",
+  logoAlt: "KDIGIT — Innovation digitale",
   slogan: "L'innovation numérique au service de votre croissance",
   sloganEn: "Digital innovation at the service of your growth",
   description:
