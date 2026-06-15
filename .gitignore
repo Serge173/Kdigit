@@ -50,3 +50,6 @@ vercel-env.txt
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# documentation locale (non publiée sur GitHub)
+README.md
