@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireApiSession, isErrorResponse } from "@/lib/api-auth";
-import { userSchema } from "@/lib/admin-schemas";
+import { userSchema, userCreateSchema } from "@/lib/admin-schemas";
 import { hashPassword } from "@/lib/auth";
 
 export async function GET(request: NextRequest) {
@@ -24,11 +24,7 @@ export async function POST(request: NextRequest) {
   if (isErrorResponse(session)) return session;
 
   try {
-    const body = userSchema.parse(await request.json());
-    if (!body.password) {
-      return NextResponse.json({ error: "Password required" }, { status: 400 });
-    }
-
+    const body = userCreateSchema.parse(await request.json());
     const passwordHash = await hashPassword(body.password);
     const user = await prisma.user.create({
       data: {

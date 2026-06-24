@@ -39,6 +39,25 @@ export const FALLBACK_HERO_SLIDES: HeroSlideData[] = [
     published: true,
   },
   {
+    id: "6",
+    slug: "demander-un-devis",
+    badgeFr: "Devis gratuit · Réponse 48h",
+    badgeEn: "Free quote · Reply in 48h",
+    titleFr: "Demandez votre",
+    titleEn: "Request your",
+    highlightFr: "devis personnalisé",
+    highlightEn: "personalized quote",
+    subtitleFr:
+      "Remplissez notre fiche de collecte des besoins directement sur le site et recevez une proposition professionnelle sur mesure.",
+    subtitleEn:
+      "Complete our client needs assessment form on the site and receive a professional tailored proposal.",
+    image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1920&q=80",
+    ctaHref: "/#devis",
+    ctaSecondaryHref: "/services",
+    order: 1,
+    published: true,
+  },
+  {
     id: "1",
     slug: "transformation",
     badgeFr: "Solutions digitales innovantes",
@@ -54,7 +73,7 @@ export const FALLBACK_HERO_SLIDES: HeroSlideData[] = [
     image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&q=80",
     ctaHref: "/devis",
     ctaSecondaryHref: "/services",
-    order: 1,
+    order: 2,
     published: true,
   },
   {
@@ -73,7 +92,7 @@ export const FALLBACK_HERO_SLIDES: HeroSlideData[] = [
     image: "/images/products/invitation-de-baby.png",
     ctaHref: "/produits/invitation-de-baby",
     ctaSecondaryHref: "/devis",
-    order: 2,
+    order: 3,
     published: true,
   },
   {
@@ -92,7 +111,7 @@ export const FALLBACK_HERO_SLIDES: HeroSlideData[] = [
     image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1920&q=80",
     ctaHref: "/devis",
     ctaSecondaryHref: "/services/sites-internet",
-    order: 3,
+    order: 4,
     published: true,
   },
   {
@@ -111,7 +130,7 @@ export const FALLBACK_HERO_SLIDES: HeroSlideData[] = [
     image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=1920&q=80",
     ctaHref: "/devis",
     ctaSecondaryHref: "/services/applications-mobiles",
-    order: 4,
+    order: 5,
     published: true,
   },
   {
@@ -130,7 +149,7 @@ export const FALLBACK_HERO_SLIDES: HeroSlideData[] = [
     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1920&q=80",
     ctaHref: "/devis",
     ctaSecondaryHref: "/services/applications-web",
-    order: 5,
+    order: 6,
     published: true,
   },
 ];
@@ -141,7 +160,15 @@ export async function getHeroSlides(): Promise<HeroSlideData[]> {
       where: { published: true },
       orderBy: { order: "asc" },
     });
-    if (slides.length > 0) return slides;
+    if (slides.length > 0) {
+      const missingFromFallback = FALLBACK_HERO_SLIDES.filter(
+        (fallback) => !slides.some((slide) => slide.slug === fallback.slug)
+      );
+      if (missingFromFallback.length > 0) {
+        return [...slides, ...missingFromFallback].sort((a, b) => a.order - b.order);
+      }
+      return slides;
+    }
     return FALLBACK_HERO_SLIDES;
   } catch {
     return FALLBACK_HERO_SLIDES;

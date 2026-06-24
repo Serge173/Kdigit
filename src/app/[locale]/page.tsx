@@ -8,6 +8,7 @@ import { Testimonials } from "@/components/sections/Testimonials";
 import { Methodology } from "@/components/sections/Methodology";
 import { CTASection } from "@/components/sections/CTASection";
 import { QuickContactSection } from "@/components/sections/QuickContactSection";
+import { HomeQuoteSection } from "@/components/sections/HomeQuoteSection";
 import { getFeaturedProjects } from "@/lib/data/projects";
 import { getHeroSlides } from "@/lib/data/hero-slides";
 
@@ -33,6 +34,7 @@ export default async function HomePage({
       <PortfolioSection projects={projects} />
       <Testimonials />
       <Methodology />
+      <HomeQuoteSection locale={locale} />
       <QuickContactSection locale={locale} />
       <CTASection />
     </>

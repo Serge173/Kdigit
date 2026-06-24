@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { verifyPassword, createSession } from "@/lib/auth";
+import { checkRateLimit, getRateLimitFromEnv } from "@/lib/rate-limit";
+import { getClientIp } from "@/lib/db-errors";
 
 const schema = z.object({
   email: z.string().email(),
@@ -10,6 +12,13 @@ const schema = z.object({
 
 export async function POST(request: NextRequest) {
   try {
+    const ip = getClientIp(request);
+    const loginLimit = getRateLimitFromEnv("LOGIN_RATE_LIMIT_PER_HOUR", 20);
+
+    if (!checkRateLimit("login", ip, loginLimit)) {
+      return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+    }
+
     const body = schema.parse(await request.json());
 
     const user = await prisma.user.findUnique({ where: { email: body.email } });

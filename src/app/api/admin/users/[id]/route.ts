@@ -16,6 +16,14 @@ export async function PUT(
   try {
     const body = userSchema.parse(await request.json());
 
+    if (session.userId === id && body.active === false) {
+      return NextResponse.json({ error: "Vous ne pouvez pas désactiver votre propre compte" }, { status: 400 });
+    }
+
+    if (session.userId === id && body.role !== session.role) {
+      return NextResponse.json({ error: "Vous ne pouvez pas modifier votre propre rôle" }, { status: 400 });
+    }
+
     const data: Record<string, unknown> = {
       name: body.name,
       email: body.email,

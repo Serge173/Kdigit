@@ -45,6 +45,21 @@ export const userSchema = z.object({
   active: z.coerce.boolean().optional().default(true),
 });
 
+export const userCreateSchema = userSchema.extend({
+  password: z.string().min(6),
+});
+
+export const changePasswordSchema = z
+  .object({
+    currentPassword: z.string().min(1),
+    newPassword: z.string().min(6),
+    confirmPassword: z.string().min(6),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
+
 export const heroSlideSchema = z.object({
   badgeFr: z.string().min(1).max(100),
   badgeEn: z.string().min(1).max(100),

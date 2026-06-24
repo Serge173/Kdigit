@@ -11,6 +11,13 @@ export async function adminQuery<T>(fn: () => Promise<T>, fallback: T): Promise<
   }
 }
 
+export async function getAdminQuote(id: string) {
+  return adminQuery(
+    () => prisma.quoteRequest.findUnique({ where: { id } }),
+    null
+  );
+}
+
 export async function getAdminQuotes() {
   return adminQuery(
     () => prisma.quoteRequest.findMany({ orderBy: { createdAt: "desc" } }),
@@ -72,7 +79,7 @@ export async function getDashboardData() {
       prisma.contactMessage.count({ where: { status: "NEW" } }),
       prisma.quoteRequest.count({ where: { status: "NEW" } }),
       prisma.quoteRequest.count(),
-      prisma.quoteRequest.findMany({ orderBy: { createdAt: "desc" } }),
+      prisma.quoteRequest.findMany({ orderBy: { createdAt: "desc" }, take: 5 }),
     ]);
     return { projects, posts, messagesNew, quotesNew, quotesTotal, quotes };
   } catch (error) {

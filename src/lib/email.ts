@@ -1,5 +1,7 @@
 import nodemailer from "nodemailer";
 import { emailHeaderHtml } from "@/lib/branding";
+import type { NeedsAssessmentData } from "@/lib/quote-form-schema";
+import { formatQuoteSummary } from "@/lib/quote-form-schema";
 
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
@@ -54,6 +56,24 @@ export function contactNotificationHtml(data: {
     <p><strong>Message :</strong></p>
     <p>${data.message.replace(/\n/g, "<br>")}</p>
   `;
+}
+
+export function needsAssessmentNotificationHtml(data: NeedsAssessmentData) {
+  const summary = formatQuoteSummary(data, "fr");
+  return `
+    ${emailHeaderHtml()}
+    <h2 style="color:#14532D;margin-bottom:8px;">Nouvelle fiche de collecte des besoins — KDIGIT</h2>
+    <p style="color:#64748b;margin-bottom:24px;">Un visiteur a rempli le formulaire « Demander un devis ».</p>
+    <pre style="white-space:pre-wrap;font-family:Inter,Arial,sans-serif;font-size:14px;line-height:1.6;background:#f8fafc;padding:20px;border-radius:12px;border:1px solid #e2e8f0;">${escapeHtml(summary)}</pre>
+  `;
+}
+
+function escapeHtml(value: string) {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
 }
 
 export function quoteNotificationHtml(data: {

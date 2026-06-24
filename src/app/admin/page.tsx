@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { FolderOpen, FileText, MessageSquare, ClipboardList, ArrowRight } from "lucide-react";
-import { QuotesList } from "@/components/admin/QuotesList";
+import { QuotesTable } from "@/components/admin/QuotesTable";
 import { getDashboardData } from "@/lib/admin-data";
 
 export default async function AdminDashboard() {
@@ -14,7 +14,15 @@ export default async function AdminDashboard() {
   ];
 
   const serializedQuotes = data.quotes.map((q) => ({
-    ...q,
+    id: q.id,
+    name: q.name,
+    email: q.email,
+    phone: q.phone,
+    appName: q.appName,
+    company: q.company,
+    serviceType: q.serviceType,
+    budget: q.budget,
+    status: q.status,
     createdAt: q.createdAt.toISOString(),
   }));
 
@@ -46,7 +54,7 @@ export default async function AdminDashboard() {
         <div>
           <h2 className="text-2xl font-bold text-secondary">Demandes de devis</h2>
           <p className="text-muted-foreground text-sm mt-1">
-            {data.quotesTotal} demande(s) au total
+            {data.quotesTotal} demande(s) au total — cliquez sur une ligne pour voir le détail
           </p>
         </div>
         <Link
@@ -57,7 +65,7 @@ export default async function AdminDashboard() {
         </Link>
       </div>
 
-      <QuotesList quotes={serializedQuotes} />
+      <QuotesTable quotes={serializedQuotes} limit={5} showViewAllLink={data.quotesTotal > 5} totalCount={data.quotesTotal} />
     </div>
   );
 }

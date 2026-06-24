@@ -15,6 +15,12 @@ const SLIDE_CTA_LABELS: Record<
   string,
   { primaryFr: string; primaryEn: string; secondaryFr: string; secondaryEn: string }
 > = {
+  "demander-un-devis": {
+    primaryFr: "Remplir le formulaire",
+    primaryEn: "Fill the form",
+    secondaryFr: "Nos services",
+    secondaryEn: "Our services",
+  },
   bienvenue: {
     primaryFr: "Découvrir KDIGIT",
     primaryEn: "Discover KDIGIT",
@@ -30,6 +36,13 @@ const SLIDE_CTA_LABELS: Record<
 };
 
 const PRODUCT_BG_SLUGS = new Set(["invitation-de-baby"]);
+
+function resolveCtaHref(href: string) {
+  if (href.startsWith("/#")) {
+    return { pathname: "/" as const, hash: href.slice(2) };
+  }
+  return href;
+}
 
 interface HeroProps {
   slides: HeroSlideData[];
@@ -136,7 +149,7 @@ export function Hero({ slides }: HeroProps) {
 
             <div className={cn("flex flex-col sm:flex-row", compactCta ? "mt-4 gap-2" : "mt-6 sm:mt-8 gap-3")}>
               <Link
-                href={slide.ctaHref}
+                href={resolveCtaHref(slide.ctaHref)}
                 className={cn(
                   "inline-flex items-center justify-center gradient-bg text-white hover:opacity-90 transition-opacity",
                   compactCta

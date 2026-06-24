@@ -99,10 +99,14 @@ model QuoteRequest {
   phone       String
   email       String
   company     String?
+  appName     String?
+  address     String?
+  sector      String?
   serviceType String
   budget      String?
   deadline    String?
   description String      @db.Text
+  formData    Json?
   fileUrl     String?
   status      QuoteStatus @default(NEW)
   ipAddress   String?

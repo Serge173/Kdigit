@@ -151,7 +151,7 @@ export const TESTIMONIALS = [
 
 export const TEAM = [
   {
-    name: "Koffi D.",
+    name: "Keayeni Serge Pacome",
     roleFr: "Fondateur & CEO",
     roleEn: "Founder & CEO",
     bioFr: "Expert en transformation digitale avec plus de 10 ans d'expérience.",

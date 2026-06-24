@@ -8,6 +8,7 @@ import {
   getClientIp,
 } from "@/lib/db-errors";
 import { sendEmail, contactNotificationHtml } from "@/lib/email";
+import { checkRateLimit, getRateLimitFromEnv } from "@/lib/rate-limit";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -21,23 +22,6 @@ const schema = z.object({
   website: z.string().max(0).optional(),
 });
 
-const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
-
-function checkRateLimit(ip: string): boolean {
-  const limit = Number(process.env.CONTACT_RATE_LIMIT_PER_HOUR || 10);
-  const now = Date.now();
-  const entry = rateLimitMap.get(ip);
-
-  if (!entry || now > entry.resetAt) {
-    rateLimitMap.set(ip, { count: 1, resetAt: now + 3600000 });
-    return true;
-  }
-
-  if (entry.count >= limit) return false;
-  entry.count++;
-  return true;
-}
-
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -48,8 +32,9 @@ export async function POST(request: NextRequest) {
 
     const data = schema.parse(body);
     const ip = getClientIp(request);
+    const limit = getRateLimitFromEnv("CONTACT_RATE_LIMIT_PER_HOUR", 10);
 
-    if (!checkRateLimit(ip)) {
+    if (!checkRateLimit("contact", ip, limit)) {
       return NextResponse.json({ error: "Too many requests" }, { status: 429 });
     }
 

@@ -14,18 +14,19 @@ import {
   Users,
   LogOut,
   Images,
+  UserCircle,
 } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
 import { cn } from "@/lib/utils";
 
 const navItems = [
-  { href: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
-  { href: "/admin/projets", label: "Réalisations", icon: FolderOpen },
-  { href: "/admin/articles", label: "Articles", icon: FileText },
-  { href: "/admin/slides", label: "Slides Hero", icon: Images },
-  { href: "/admin/devis", label: "Devis", icon: ClipboardList, badgeKey: "quotesNew" as const },
-  { href: "/admin/messages", label: "Messages", icon: MessageSquare, badgeKey: "messagesNew" as const },
-  { href: "/admin/utilisateurs", label: "Utilisateurs", icon: Users },
+  { href: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true, adminOnly: false },
+  { href: "/admin/projets", label: "Réalisations", icon: FolderOpen, adminOnly: false },
+  { href: "/admin/articles", label: "Articles", icon: FileText, adminOnly: false },
+  { href: "/admin/slides", label: "Slides Hero", icon: Images, adminOnly: false },
+  { href: "/admin/devis", label: "Devis", icon: ClipboardList, badgeKey: "quotesNew" as const, adminOnly: false },
+  { href: "/admin/messages", label: "Messages", icon: MessageSquare, badgeKey: "messagesNew" as const, adminOnly: false },
+  { href: "/admin/utilisateurs", label: "Utilisateurs", icon: Users, adminOnly: true },
 ];
 
 interface NavStats {
@@ -33,9 +34,16 @@ interface NavStats {
   messagesNew: number;
 }
 
+interface MeProfile {
+  name: string;
+  email: string;
+  role: string;
+}
+
 export function AdminSidebar() {
   const pathname = usePathname();
   const [stats, setStats] = useState<NavStats>({ quotesNew: 0, messagesNew: 0 });
+  const [me, setMe] = useState<MeProfile | null>(null);
 
   useEffect(() => {
     fetch("/api/admin/stats")
@@ -44,6 +52,13 @@ export function AdminSidebar() {
         if (data) {
           setStats({ quotesNew: data.quotesNew, messagesNew: data.messagesNew });
         }
+      })
+      .catch(() => {});
+
+    fetch("/api/admin/me")
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data) setMe(data);
       })
       .catch(() => {});
   }, [pathname]);
@@ -56,14 +71,25 @@ export function AdminSidebar() {
   const isActive = (href: string, exact?: boolean) =>
     exact ? pathname === href : pathname === href || pathname.startsWith(`${href}/`);
 
+  const visibleItems = navItems.filter((item) => !item.adminOnly || me?.role === "ADMIN");
+
   return (
     <aside className="w-64 bg-secondary text-white flex flex-col shrink-0">
       <div className="p-6 border-b border-white/10">
         <Logo variant="admin" href="/admin" nativeLink />
       </div>
 
-      <nav className="flex-1 p-4 space-y-1">
-        {navItems.map((item) => {
+      {me && (
+        <div className="px-4 pt-4">
+          <div className="rounded-xl bg-white/5 border border-white/10 px-3 py-2.5">
+            <p className="text-sm font-semibold truncate">{me.name}</p>
+            <p className="text-xs text-white/50 truncate">{me.email}</p>
+          </div>
+        </div>
+      )}
+
+      <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
+        {visibleItems.map((item) => {
           const active = isActive(item.href, item.exact);
           const badge =
             item.badgeKey === "quotesNew"
@@ -81,14 +107,14 @@ export function AdminSidebar() {
                 active ? "bg-primary text-white" : "text-white/60 hover:text-white hover:bg-white/10"
               )}
             >
-              <span className="flex items-center gap-3">
-                <item.icon className="w-5 h-5" />
-                {item.label}
+              <span className="flex items-center gap-3 min-w-0">
+                <item.icon className="w-5 h-5 shrink-0" />
+                <span className="truncate">{item.label}</span>
               </span>
               {badge > 0 && (
                 <span
                   className={cn(
-                    "min-w-5 h-5 px-1.5 rounded-full text-xs font-bold flex items-center justify-center",
+                    "min-w-5 h-5 px-1.5 rounded-full text-xs font-bold flex items-center justify-center shrink-0",
                     active ? "bg-white text-primary" : "bg-primary text-white"
                   )}
                 >
@@ -100,7 +126,19 @@ export function AdminSidebar() {
         })}
       </nav>
 
-      <div className="p-4 border-t border-white/10">
+      <div className="p-4 border-t border-white/10 space-y-1">
+        <Link
+          href="/admin/profil"
+          className={cn(
+            "flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors w-full",
+            pathname === "/admin/profil"
+              ? "bg-primary text-white"
+              : "text-white/60 hover:text-white hover:bg-white/10"
+          )}
+        >
+          <UserCircle className="w-5 h-5" />
+          Mon compte
+        </Link>
         <button
           onClick={handleLogout}
           className="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-white/60 hover:text-white hover:bg-white/10 w-full transition-colors"
